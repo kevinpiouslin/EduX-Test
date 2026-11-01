@@ -3,33 +3,537 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>My EduX site</title>
+    <title>Kevin — Gamification in Education</title>
+    <meta
+      name="description"
+      content="Kevin, Masters in Education. Five years in the classroom, most recently head of the math department in Dubai, on why games belong in lessons."
+    />
     <style>
+      :root {
+        --ink: #17151f;
+        --paper: #fffdf6;
+        --pink: #ff4d6d;
+        --blue: #2f5bff;
+        --yellow: #ffd23f;
+        --mint: #21c39a;
+        --line: 3px solid var(--ink);
+        --pop: 8px 8px 0 var(--ink);
+        --pop-sm: 5px 5px 0 var(--ink);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 24px;
-        box-sizing: border-box;
-        background: #faf9f5;
-        color: #141413;
-        font-family: Georgia, "Times New Roman", serif;
-        text-align: center;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+          sans-serif;
+        font-size: 1.0625rem;
+        line-height: 1.6;
       }
-      main {
-        max-width: 32rem;
+
+      .wrap {
+        width: min(100% - 2.5rem, 62rem);
+        margin-inline: auto;
       }
+
+      section {
+        padding-block: 3.5rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+
       h1 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
+        font-size: clamp(2.75rem, 9vw, 5rem);
+        font-weight: 900;
+      }
+
+      h2 {
+        font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+        font-weight: 800;
+      }
+
+      h3 {
+        font-size: 1.125rem;
+        font-weight: 800;
+      }
+
+      p {
+        margin: 0 0 1rem;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.7rem;
+        border: var(--line);
+        border-radius: 999px;
+        background: var(--yellow);
+        margin-bottom: 1.25rem;
+      }
+
+      /* hero */
+      .hero {
+        padding-block: 4.5rem 3rem;
+        border-bottom: var(--line);
+      }
+
+      .hero h1 .last {
+        background: linear-gradient(transparent 62%, var(--yellow) 62%);
+      }
+
+      .lede {
+        font-size: clamp(1.125rem, 2.4vw, 1.4rem);
+        max-width: 38rem;
+        margin-top: 1.25rem;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1.75rem;
+        padding: 0;
+        list-style: none;
+      }
+
+      .chips li {
+        border: var(--line);
+        border-radius: 999px;
+        padding: 0.45rem 1rem;
+        font-weight: 700;
+        font-size: 0.95rem;
+        background: var(--paper);
+        box-shadow: var(--pop-sm);
+      }
+
+      .chips li:nth-child(1) {
+        background: var(--pink);
+      }
+
+      .chips li:nth-child(2) {
+        background: var(--mint);
+      }
+
+      .chips li:nth-child(3) {
+        background: var(--blue);
+        color: #fff;
+      }
+
+      /* idea cards */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+        gap: 1.25rem;
+        margin-top: 2rem;
+        padding: 0;
+        list-style: none;
+      }
+
+      .card {
+        border: var(--line);
+        border-radius: 1.1rem;
+        padding: 1.4rem;
+        background: #fff;
+        box-shadow: var(--pop);
+        transition: transform 140ms ease, box-shadow 140ms ease;
+      }
+
+      .card:nth-child(1) {
+        background: var(--yellow);
+      }
+
+      .card:nth-child(2) {
+        background: var(--mint);
+      }
+
+      .card:nth-child(3) {
+        background: var(--pink);
+      }
+
+      .card:nth-child(4) {
+        background: var(--blue);
+        color: #fff;
+      }
+
+      .card:hover,
+      .card:focus-within {
+        transform: translate(-3px, -3px);
+        box-shadow: 11px 11px 0 var(--ink);
+      }
+
+      .card p {
+        margin: 0.6rem 0 0;
+        font-size: 0.975rem;
+      }
+
+      .num {
+        display: inline-grid;
+        place-items: center;
+        width: 2.2rem;
+        height: 2.2rem;
+        border: var(--line);
+        border-radius: 50%;
+        background: var(--paper);
+        color: var(--ink);
+        font-weight: 900;
+        margin-bottom: 0.85rem;
+      }
+
+      /* why */
+      .why {
+        background: var(--ink);
+        color: var(--paper);
+        border-block: var(--line);
+      }
+
+      .why h2 {
+        color: var(--yellow);
+      }
+
+      .quote {
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+        font-weight: 700;
+        max-width: 42rem;
+        margin-top: 1rem;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 2rem;
+        align-items: start;
+      }
+
+      /* chat */
+      .chat-panel {
+        border: var(--line);
+        border-radius: 1.25rem;
+        background: var(--mint);
+        padding: 1.5rem;
+        box-shadow: var(--pop);
+        margin-top: 2rem;
+      }
+
+      #chat-log {
+        display: grid;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+        max-height: 24rem;
+        overflow-y: auto;
+      }
+
+      #chat-log:empty::before {
+        content: "No messages yet — try asking something below.";
+        font-size: 0.95rem;
+        opacity: 0.75;
+      }
+
+      .msg {
+        border: var(--line);
+        border-radius: 0.9rem;
+        padding: 0.7rem 0.9rem;
+        background: #fff;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+
+      .msg.user {
+        background: var(--ink);
+        color: var(--paper);
+        justify-self: end;
+        max-width: 85%;
+      }
+
+      .msg.assistant {
+        justify-self: start;
+        max-width: 90%;
+      }
+
+      #chat-form {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      textarea {
+        width: 100%;
+        font: inherit;
+        padding: 0.75rem;
+        border: var(--line);
+        border-radius: 0.8rem;
+        background: #fff;
+        color: var(--ink);
+        resize: vertical;
+      }
+
+      textarea:focus-visible,
+      button:focus-visible {
+        outline: 3px solid var(--blue);
+        outline-offset: 3px;
+      }
+
+      button {
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        border: var(--line);
+        border-radius: 0.8rem;
+        padding: 0.7rem 1.4rem;
+        background: var(--yellow);
+        color: var(--ink);
+        box-shadow: var(--pop-sm);
+        justify-self: start;
+        transition: transform 120ms ease, box-shadow 120ms ease;
+      }
+
+      button:hover:not(:disabled) {
+        transform: translate(-2px, -2px);
+        box-shadow: 7px 7px 0 var(--ink);
+      }
+
+      button:disabled {
+        cursor: progress;
+        opacity: 0.6;
+        box-shadow: none;
+      }
+
+      .status {
+        min-height: 1.5rem;
+        margin: 0.85rem 0 0;
+        font-weight: 700;
+      }
+
+      .hint {
+        margin: 0.35rem 0 0;
+        font-size: 0.875rem;
+        opacity: 0.8;
+      }
+
+      footer {
+        border-top: var(--line);
+        padding-block: 2rem;
+        font-size: 0.95rem;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
       }
     </style>
   </head>
   <body>
+    <header class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Masters in Education</p>
+        <h1>Hi, I'm Kevin<span class="last">.</span></h1>
+        <p class="lede">
+          I have been in the field of education for over 5 years, and most recently
+          I was the head of the math department in Dubai.
+        </p>
+        <ul class="chips">
+          <li>5+ years teaching</li>
+          <li>Head of maths</li>
+          <li>Dubai</li>
+        </ul>
+      </div>
+    </header>
+
     <main>
-      <h1>Your website will appear here</h1>
-      <p>Describe what you want in OpenCode, then refresh this page to see it.</p>
+      <section id="idea">
+        <div class="wrap">
+          <p class="eyebrow" style="background: var(--pink)">The idea</p>
+          <h2>Games in the classroom</h2>
+          <p style="max-width: 40rem; margin-top: 1rem">
+            Gamification is using games to engage kids and get them to do better.
+            It takes the things that make a game hard to put down and puts them
+            inside a lesson.
+          </p>
+
+          <ul class="cards">
+            <li class="card">
+              <span class="num">1</span>
+              <h3>Points</h3>
+              <p>Work earns a score, so effort becomes visible instead of invisible.</p>
+            </li>
+            <li class="card">
+              <span class="num">2</span>
+              <h3>Levels</h3>
+              <p>Small steps that get harder, so everyone can see they are moving up.</p>
+            </li>
+            <li class="card">
+              <span class="num">3</span>
+              <h3>Challenges</h3>
+              <p>A puzzle to solve or a record to beat, instead of a page of sums.</p>
+            </li>
+            <li class="card">
+              <span class="num">4</span>
+              <h3>Rewards</h3>
+              <p>A reason to come back tomorrow, and a reason to try again today.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="why">
+        <div class="wrap">
+          <p class="eyebrow" style="background: var(--mint)">Why it matters</p>
+          <h2>They already want to play</h2>
+          <p class="quote">
+            As a teacher, I know students would benefit from this, because they are
+            more inclined to do more work. They like games, so if we can merge the
+            two together, it's perfect.
+          </p>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="wrap about-grid">
+          <div>
+            <p class="eyebrow">About me</p>
+            <h2>Kevin</h2>
+          </div>
+          <div>
+            <p>
+              I am studying a Masters in Education. I have been in the field of
+              education for over 5 years, and most recently I was the head of the
+              math department in Dubai.
+            </p>
+            <p>
+              My interest is straightforward: students like games, and they work
+              harder when the two are merged.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="chat">
+        <div class="wrap">
+          <p class="eyebrow" style="background: var(--yellow)">Talk about it</p>
+          <h2>Ask a question</h2>
+          <p style="max-width: 40rem; margin-top: 1rem">
+            Try me on gamification, engagement, or what a game-like maths lesson
+            could look like.
+          </p>
+
+          <div class="chat-panel">
+            <div id="chat-log" role="log" aria-live="polite" aria-label="Conversation"></div>
+
+            <form id="chat-form">
+              <label for="chat-input" class="hint">Your message</label>
+              <textarea
+                id="chat-input"
+                name="message"
+                rows="3"
+                maxlength="2000"
+                placeholder="What would gamification look like in a maths lesson?"
+                required
+              ></textarea>
+              <button type="submit" id="chat-send">Send</button>
+            </form>
+
+            <p class="status" id="chat-status" role="status"></p>
+            <p class="hint">
+              This chat only works on the live Vercel site, not in the preview.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <footer>
+      <div class="wrap">
+        <p style="margin: 0">Kevin — Masters in Education.</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var form = document.getElementById("chat-form");
+        var input = document.getElementById("chat-input");
+        var send = document.getElementById("chat-send");
+        var log = document.getElementById("chat-log");
+        var status = document.getElementById("chat-status");
+
+        // The whole conversation, resent with every turn so the chat remembers.
+        var messages = [];
+
+        function addMessage(role, text) {
+          var el = document.createElement("p");
+          el.className = "msg " + role;
+          el.textContent = text;
+          log.appendChild(el);
+          log.scrollTop = log.scrollHeight;
+        }
+
+        form.addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          var text = input.value.trim();
+          if (!text) {
+            status.textContent = "Type a message first.";
+            return;
+          }
+
+          if (text.length > 2000) {
+            status.textContent =
+              "That message is a bit long — please keep it under 2000 characters.";
+            return;
+          }
+
+          status.textContent = "";
+          addMessage("user", text);
+          messages.push({ role: "user", content: text });
+          input.value = "";
+          send.disabled = true;
+          send.textContent = "Thinking…";
+
+          try {
+            var response = await fetch("/api/chat", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ messages: messages })
+            });
+
+            var data = await response.json().catch(function () {
+              return {};
+            });
+
+            if (!response.ok || !data.reply) {
+              status.textContent =
+                data.error ||
+                "Sorry, something went wrong on our side. Please try again in a moment.";
+              return;
+            }
+
+            addMessage("assistant", data.reply);
+            messages.push({ role: "assistant", content: data.reply });
+          } catch (error) {
+            status.textContent =
+              "Sorry, I couldn't reach the server. Please check your connection and try again.";
+          } finally {
+            send.disabled = false;
+            send.textContent = "Send";
+            input.focus();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
